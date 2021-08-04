@@ -57,6 +57,8 @@ public class TextCipher {
         System.out.print("enter a cipher from the list above: "); //Prompt user to enter a chipher
         String userCipher = myScanner.nextLine();
 
+        myScanner.close();
+
         if (userCipher.equalsIgnoreCase("caesar")) {
             System.out.println("Original Text: " + userText);
             System.out.println("Cipher: " + userCipher);
