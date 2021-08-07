@@ -12,24 +12,6 @@ public class TextCipher {
     'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K',
     'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'};
 
-    //Ceasar cipher encryption
-    public static StringBuffer caesarCipher(String text) {
-        int s = 4;
-        StringBuffer result = new StringBuffer();
-
-        for (int i=0; i<text.length(); i++) {
-            if (Character.isUpperCase(text.charAt(i))) {
-                char ch = (char)(((int)text.charAt(i) + s - 65) % 26 + 65);
-                result.append(ch);
-            }
-            else {
-                char ch = (char)(((int)text.charAt(i) + s - 97) % 26 + 97);
-                result.append(ch);
-            }
-        }
-        return result;
-    }
-
     //Monoalphabetic cipher encryption
     public static String monoAlphaCipher(String text) {
         String encryptedString = "";
@@ -48,12 +30,80 @@ public class TextCipher {
         return encryptedString;
     }
 
+    //Ceasar cipher encryption
+    public static StringBuffer caesarCipher(String text) {
+        int s = 4;
+        StringBuffer result = new StringBuffer();
+
+        for (int i=0; i<text.length(); i++) {
+            if (Character.isUpperCase(text.charAt(i))) {
+                char ch = (char)(((int)text.charAt(i) + s - 65) % 26 + 65);
+                result.append(ch);
+            }
+            else {
+                char ch = (char)(((int)text.charAt(i) + s - 97) % 26 + 97);
+                result.append(ch);
+            }
+        }
+        return result;
+    }
+
+    //HILL CIPHER ENCRYPTION
+    // generates the key matrix for the key string
+    static void getKeyMatrix(String key, int keyMatrix[][]) {
+        int k = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                keyMatrix[i][j] = (key.charAt(k)) % 65;
+                k++;
+            }
+        }
+    }
+    // encrypts the text
+    static void encrypt(int cipherMatrix[][], int keyMatrix[][], int textVector[][]) {
+        int x, i, j;
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 1; j++) {
+                cipherMatrix[i][j] = 0;
+                for (x = 0; x < 3; x++) {
+                    cipherMatrix[i][j] += keyMatrix[i][x] * textVector[x][j];
+                }
+                cipherMatrix[i][j] = cipherMatrix[i][j] % 26;
+            }
+        }
+    }
+    // implements hill cipher
+    static String hillCipher(String text, String key) {
+        // get key matrix from the key string
+        int [][]keyMatrix = new int[3][3];
+        getKeyMatrix(key, keyMatrix);
+        int [][]textVector = new int[3][1];
+
+        // generate vector for the text
+        for (int i = 0; i < 3; i++) {
+            textVector[i][0] = (text.charAt(i)) % 65;
+        }
+        int [][]cipherMatrix = new int[3][1];
+
+        //generates the encrypted vector
+        encrypt(cipherMatrix, keyMatrix, textVector);
+        String CipherText = "";
+
+        //generate encrypted text from encrypted vector
+        for (int i = 0; i < 3; i++) {
+            CipherText += (char)(cipherMatrix[i][0] + 65);
+        }
+        return CipherText;
+    }
+
     public static void main(String[] args) {
+        String key = "GYBNQKURP"; // key for use with hill cipher encryption
+
         Scanner myScanner = new Scanner(System.in);
         System.out.print("Enter some text you want encrypted: "); //Prompt user for text.
         String userText = myScanner.nextLine();
         
-        System.out.println("Caesar, or Monoalphabetic");
+        System.out.println("Caesar, Hill, or Monoalphabetic");
         System.out.print("enter a cipher from the list above: "); //Prompt user to enter a chipher
         String userCipher = myScanner.nextLine();
 
@@ -64,10 +114,15 @@ public class TextCipher {
             System.out.println("Cipher: " + userCipher);
             System.out.println("Encryption: " + caesarCipher(userText));
         }
-        else if(userCipher.equalsIgnoreCase("monoalphabetic")) {
+        else if (userCipher.equalsIgnoreCase("monoalphabetic")) {
             System.out.println("Original Text: " + userText);
             System.out.println("Cipher: " + userCipher);
             System.out.println("Encryption: " + monoAlphaCipher(userText));
+        }
+        else if (userCipher.equalsIgnoreCase("hill")) {
+            System.out.println("Original Text: " + userText);
+            System.out.println("Cipher: " + userCipher);
+            System.out.println("Encryption: " + hillCipher(userText, key));
         }
         else {
             System.out.println("That is not an optional cipher");
