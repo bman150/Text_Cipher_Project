@@ -103,7 +103,12 @@ public class TextCipher {
         System.out.print("Enter some text you want encrypted: "); //Prompt user for text.
         String userText = myScanner.nextLine();
         
-        System.out.println("Caesar, Hill, or Monoalphabetic");
+        System.out.println();
+        System.out.println("*****Ciphers!*****");
+        System.out.println("*****************");
+        System.out.println("Caesar");
+        System.out.println("Hill");
+        System.out.println("Monoalphabetic");
         System.out.print("enter a cipher from the list above: "); //Prompt user to enter a chipher
         String userCipher = myScanner.nextLine();
 
