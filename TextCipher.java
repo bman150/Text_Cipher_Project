@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import javax.swing.*; // for java GUI
 import java.io.*;
 /*A Java Program that lets user input text and prompt user to select
 a cipher to encrypt the text. Then the encrypted text is outputed.
