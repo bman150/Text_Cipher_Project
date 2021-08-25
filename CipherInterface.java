@@ -3,11 +3,24 @@ import java.awt.*;
 import javax.swing.*;
 
 public class CipherInterface {
+    //private static String ENCRYPT = "Encrypt";
+    //static JButton encrypButton;
+    //public static JTextArea output;
+    //public static JTextField input;
+    //static JFrame frame;
+    //static JPanel panel;
+    //public static String testString = "test";
+
     public static void main (String [] args) {
+        createUI();
+    }
+
+    // Function creates the UI
+    public static void createUI() {
         // List of ciphers
         String[] cipherList = {"Caesar", "Hill", "Monoalphabetic"};
 
-        // Create the window frame of the UI.
+        // Create the frame(window) of the UI
         JFrame window = new JFrame("Text Cipher");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(400, 400);
@@ -37,6 +50,13 @@ public class CipherInterface {
         ep.add(el);
         ep.add(ea);
 
+        // NOTE: ADD CODE FOR SUB-COMPONENT ACTIONS HERE!
+        /*
+         * encrypt button when clicked will output user input
+         * (will edit input at latter time).
+         * May need to use an ActionListener or something similar.
+         */
+
         // Layout for the components that are added to the window frame.
         GridLayout windowLayout = new GridLayout(3,1);
         window.setLayout(windowLayout);
@@ -46,6 +66,5 @@ public class CipherInterface {
         window.add(cp);
         window.add(ep);
         window.setVisible(true);
-
     }
 }
