@@ -1,5 +1,6 @@
 // A UI for the TextCipher program.
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class CipherInterface {
@@ -49,13 +50,6 @@ public class CipherInterface {
         ea.setText("some encrypted text"); // NOTE: TEMPORARY LINE UNTIL ABLE TO EDIT VIA TEXT INTPU, ENCRYPT BUTTON, AND CIPHER SELECTION!
         ep.add(el);
         ep.add(ea);
-
-        // NOTE: ADD CODE FOR SUB-COMPONENT ACTIONS HERE!
-        /*
-         * encrypt button when clicked will output user input
-         * (will edit input at latter time).
-         * May need to use an ActionListener or something similar.
-         */
 
         // Layout for the components that are added to the window frame.
         GridLayout windowLayout = new GridLayout(3,1);
