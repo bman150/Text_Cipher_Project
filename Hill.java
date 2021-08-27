@@ -1,9 +1,7 @@
 // This class encrypts text using a Hill Cipher.
 public class Hill {
-    // Hill encryption key.
-    String key = "GYBNQKURP";
 
-    // generates the key matrix for the key string
+    // generates the key matrix for the encryption key
     static void getKeyMatrix(String key, int keyMatrix[][]) {
         int k = 0;
         for (int i = 0; i < 3; i++) {

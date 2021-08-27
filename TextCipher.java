@@ -5,6 +5,8 @@ a cipher to encrypt the text. Then the encrypted text is outputed.
 public class TextCipher {
 
     public static void main(String[] args) {
+        // encryption key for use with Hill Cipher
+        String key = "GYBNQKURP";
 
         Scanner myScanner = new Scanner(System.in);
         System.out.print("Enter some text you want encrypted: ");
@@ -24,17 +26,17 @@ public class TextCipher {
         if (userCipher.equalsIgnoreCase("caesar")) {
             System.out.println("Original Text: " + userText);
             System.out.println("Cipher: " + userCipher);
-            System.out.println("Encryption: " + "Caesar return value here!");
+            System.out.println("Encryption: " + Caesar.caesarCipher(userText));
         }
         else if (userCipher.equalsIgnoreCase("monoalphabetic")) {
             System.out.println("Original Text: " + userText);
             System.out.println("Cipher: " + userCipher);
-            System.out.println("Encryption: " + "Monoa;phabetic return value here!");
+            System.out.println("Encryption: " + Monoalphabetic.monoAlphaCipher(userText));
         }
         else if (userCipher.equalsIgnoreCase("hill")) {
             System.out.println("Original Text: " + userText);
             System.out.println("Cipher: " + userCipher);
-            System.out.println("Encryption: " + "Hill return value here!");
+            System.out.println("Encryption: " + Hill.hillCipher(userText, key));
         }
         else {
             System.out.println("That is not an optional cipher");
