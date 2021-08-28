@@ -1,5 +1,5 @@
 import java.util.Scanner;
-/*A Java Program that lets user input text and prompt user to select
+/*A Java test Program that lets user input text and prompt user to select
 a cipher to encrypt the text. Then the encrypted text is outputed.
 */
 public class TextCipher {

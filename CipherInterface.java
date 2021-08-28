@@ -1,64 +1,79 @@
-// A UI for the TextCipher program.
+// Creates a UI for the cipher program.
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class CipherInterface {
-    //private static String ENCRYPT = "Encrypt";
-    //static JButton encrypButton;
-    //public static JTextArea output;
-    //public static JTextField input;
-    //static JFrame frame;
-    //static JPanel panel;
-    //public static String testString = "test";
+public class CipherInterface extends JPanel {
+    private static JTextField textField;
+    private static JComboBox<String> cipherBox;
+    private static JTextField encryptField;
+    private static final String[] CIPHERLIST = {"Caesar", "Hill", "Monoalphabetic"};
 
-    public static void main (String [] args) {
-        createUI();
+    private CipherInterface() {
+        setLayout(new GridLayout(3, 1)); // a 3x1 grid layout for the components
+
+        // textPanel component and its sub-components
+        JPanel textPanel = new JPanel();
+        JLabel textLabel = new JLabel("Enter Text");
+        textField = new JTextField(15);
+        textPanel.add(textLabel);
+        textPanel.add(textField);
+        add(textPanel);
+
+        // cipherPanel component and its sub-components
+        JPanel cipherPanel = new JPanel();
+        JLabel cipherLabel = new JLabel("Select Cipher");
+        cipherBox = new JComboBox<>(CIPHERLIST);
+        cipherBox.setBounds(80, 50, 140, 20);
+        JButton cipherButton = new JButton("Encrypt");
+        cipherButton.addActionListener(new btnListener());
+        cipherPanel.add(cipherLabel);
+        cipherPanel.add(cipherBox);
+        cipherPanel.add(cipherButton);
+        add(cipherPanel);
+
+        // encryptedPanel component and its sub-components
+        JPanel encryptedPanel = new JPanel();
+        JLabel encryptedLabel = new JLabel("Encrypted Text");
+        encryptField = new JTextField(25);
+        encryptedPanel.add(encryptedLabel);
+        encryptedPanel.add(encryptField);
+        add(encryptedPanel);
     }
 
-    // Function creates the UI
-    public static void createUI() {
-        // List of ciphers
-        String[] cipherList = {"Caesar", "Hill", "Monoalphabetic"};
+    public static void main (String [] args) {
+        //createUI();
+        JFrame frame = new JFrame("UI Test");
+        frame.add(new CipherInterface());
+        frame.setVisible(true);
+        frame.setSize(300, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
-        // Create the frame(window) of the UI
-        JFrame window = new JFrame("Text Cipher");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(400, 400);
-
-        // Create panel component for text entry/encryption and add sub-components.
-        JPanel tp = new JPanel(); // the panel is not visible in output
-        JLabel tl = new JLabel("Enter Text");
-        JTextField tf = new JTextField(10); // accepts up to 10 characters
-        JButton tb = new JButton("Encrypt");
-        tp.add(tl); // sub-components add using default (flow layout ?) layout
-        tp.add(tf);
-        tp.add(tb);
-
-        // Create panel component for cipher selection and add sub-components.
-        JPanel cp = new JPanel();
-        JLabel cl = new JLabel("Select Cipher");
-        JComboBox<String> cipherBox = new JComboBox<>(cipherList);
-        cipherBox.setBounds(80, 50, 140, 20);
-        cp.add(cl);
-        cp.add(cipherBox);
-
-        // Create panel component for encryption output and add sub-components.
-        JPanel ep = new JPanel();
-        JLabel el = new JLabel("Encrypted Text");
-        JTextArea ea = new JTextArea();
-        ea.setText("some encrypted text"); // NOTE: TEMPORARY LINE UNTIL ABLE TO EDIT VIA TEXT INTPU, ENCRYPT BUTTON, AND CIPHER SELECTION!
-        ep.add(el);
-        ep.add(ea);
-
-        // Layout for the components that are added to the window frame.
-        GridLayout windowLayout = new GridLayout(3,1);
-        window.setLayout(windowLayout);
-
-        // Add components to the window frame.
-        window.add(tp);
-        window.add(cp);
-        window.add(ep);
-        window.setVisible(true);
+    private static class btnListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String key = "GYBNQKURP"; // encryption key for hill cipher
+            StringBuffer resultBuffer;
+            String resultString;
+            String textContent = textField.getText();
+            String cipherContent = cipherBox.getSelectedItem().toString();
+            if (cipherContent == "Caesar") {
+                resultBuffer = Caesar.caesarCipher(textContent);
+                resultString = resultBuffer.toString();
+                encryptField.setText(resultString);
+            }
+            else if (cipherContent == "Hill") {
+                resultString = Hill.hillCipher(textContent, key);
+                encryptField.setText(resultString);
+            }
+            else if (cipherContent == "Monoalphabetic") {
+                resultString = Monoalphabetic.monoAlphaCipher(textContent);
+                encryptField.setText(resultString);
+            }
+            else {
+                encryptField.setText("Not valid");
+            }
+        }
     }
 }
